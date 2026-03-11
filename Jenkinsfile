@@ -2,7 +2,7 @@ node {
 
     checkout scm
 
-    def PROD_HOST = "172.20.209.222"
+    def PROD_HOST = "172.20.0.1"
 
     // Build
     stage("Build"){
