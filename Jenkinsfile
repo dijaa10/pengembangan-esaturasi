@@ -16,14 +16,13 @@ node {
     }
 
     stage('Deploy to Prod') {
-    agent any
-    steps {
-        withDockerContainer(image: 'agung3wi/alpine-rsync:1.1') {
+        docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
             sshagent(credentials: ['dj']) {
                 sh 'mkdir -p /root/.ssh'
-                sh 'ssh-keyscan -H 172.20.209.222 >> /root/.ssh/known_hosts'  // <-- ganti di sini
-                sh 'rsync -avz --delete ./ dj@172.20.209.222:/path/to/prod/'  // <-- dan di sini
+                sh 'ssh-keyscan -H 172.20.209.222 >> /root/.ssh/known_hosts'
+                sh 'rsync -avz --delete ./ dj@172.20.209.222:/home/dj/prod.kelasdevops.xyz/'
             }
         }
     }
+
 }
