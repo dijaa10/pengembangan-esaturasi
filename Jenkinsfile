@@ -2,7 +2,7 @@ node {
 
     checkout scm
 
-    def PROD_HOST = "172.20.0.1"
+    def PROD_HOST = "host.docker.internal"
 
     // Build
     stage("Build"){
@@ -25,7 +25,7 @@ node {
             sshagent(credentials: ['ssh-prod']) {
                 sh 'mkdir -p ~/.ssh'
                 sh "ssh-keyscan -H ${PROD_HOST} > ~/.ssh/known_hosts"
-                sh "rsync -rav --delete ./laravel/ ubuntu@${PROD_HOST}:/home/ubuntu/prod.kelasdevops.xyz/ --exclude=.env --exclude=storage --exclude=.git"
+                sh "rsync -rav --delete ./laravel/ dj@${PROD_HOST}:/home/dj/prod.kelasdevops.xyz/ --exclude=.env --exclude=storage --exclude=.git"
             }
         }
     }
