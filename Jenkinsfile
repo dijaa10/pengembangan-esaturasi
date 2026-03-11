@@ -16,13 +16,13 @@ node {
     }
 
     stage("Deploy to Prod") {
-        docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
-            sshagent(credentials: ['ssh-prod']) {
-                sh 'mkdir -p ~/.ssh'
-                sh 'ssh-keyscan -H host.docker.internal > ~/.ssh/known_hosts'
-                sh 'rsync -rav --delete ./ dj@host.docker.internal:/home/dj/prod.kelasdevops.xyz/'
-            }
+    docker.image('agung3wi/alpine-rsync:1.1').inside('-u root') {
+        sshagent(credentials: ['ssh-prod']) {
+            sh 'mkdir -p ~/.ssh'
+            sh 'ssh-keyscan -H "$PROD_HOST" > ~/.ssh/known_hosts'
+            sh 'rsync -rav --delete ./ dj@$PROD_HOST:/home/dj/prod.kelasdevops.xyz/'
         }
     }
+}
 
 }
