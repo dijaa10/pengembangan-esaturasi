@@ -17,10 +17,10 @@ node {
 
     stage('Deploy to Prod') {
     docker.image('agung3wi/alpine-rsync:1.1').inside('-u root --network host') {
-        sshagent(credentials: ['dj']) {
+        sshagent(credentials: ['ubuntu']) {
             sh 'mkdir -p /root/.ssh'
             sh 'ssh-keyscan -H 172.20.209.222 >> /root/.ssh/known_hosts'
-            sh 'rsync -avz --delete ./ dj@172.20.209.222:/home/dj/prod.kelasdevops.xyz/'
+            sh 'rsync -avz --delete ./ ubuntu@172.20.209.222:/home/dj/prod.kelasdevops.xyz/'
         }
     }
 }
