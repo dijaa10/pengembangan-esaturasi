@@ -4,10 +4,10 @@ node {
 
     // deploy env dev
     stage("Build"){
-        docker.image('shippingdocker/php-composer:8.2').inside('-u root') {
+        docker.image('composer:2.7').inside('-u root') {
 
             sh 'rm -f composer.lock'
-            sh 'composer install'
+            sh 'composer install --ignore-platform-reqs'
         }
     }
 
